@@ -1,4 +1,6 @@
 from django.test import TestCase
+import time
+from . import storage
 
 class TestCalls(TestCase):
 
@@ -6,6 +8,15 @@ class TestCalls(TestCase):
         print('SANITY CHECK')
         self.assertTrue(True)
 
-    def test_call_hello_world(self):
+    def test_webapp_reposnse_contains_hello_world(self):
+        print("Webapp response contains 'Hello world!' html")
         response = self.client.get('/webapp/')
-        self.assertTrue('<h2>Hello World!</h2>'.encode('utf-8') in response.content)
+        self.assertTrue('<h2>Hello world!</h2>'.encode('utf-8') in response.content)
+
+    def test_can_get_last_stored_unix_timestamp(self):
+        local_timestamp = int(time.time())
+        print(local_timestamp)
+        storage.Storage_Of.set_timestamp(local_timestamp)
+        response = self.client.get('/webapp/')
+        storage.Storage_Of.print_timestamp()
+        self.assertTrue(str(local_timestamp).encode('utf-8') in response.content)
