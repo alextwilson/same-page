@@ -14,9 +14,7 @@ class TestCalls(TestCase):
         self.assertTrue('<h2>Hello world!</h2>'.encode('utf-8') in response.content)
 
     def test_can_get_last_stored_unix_timestamp(self):
-        local_timestamp = int(time.time())
-        print(local_timestamp)
-        storage.Storage_Of.set_timestamp(local_timestamp)
+        storage.Storage_Of.set_timestamp()
         response = self.client.get('/webapp/')
         storage.Storage_Of.print_timestamp()
-        self.assertTrue(str(local_timestamp).encode('utf-8') in response.content)
+        self.assertTrue(str(storage.Storage_Of.timestamp).encode('utf-8') in response.content)
