@@ -8,4 +8,4 @@ class TestCalls(TestCase):
 
     def test_call_hello_world(self):
         response = self.client.get('/webapp/')
-        self.assertTrue('<h2>Hello Ma!</h2>'.encode('utf-8') in response.content)
+        self.assertTrue('<h2>Hello Travis!</h2>'.encode('utf-8') in response.content)
